@@ -7,6 +7,7 @@ import { useFormState, useFormStatus } from "react-dom"
 import { Button } from "../button";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { useSearchParams } from "next/navigation";
+import { ChangeEvent, useState } from "react";
 
 export default function LoginForm({
   searchParams,
@@ -44,8 +45,10 @@ export default function LoginForm({
                 id="password"
                 name="password"
                 defaultValue={initialState.password}
+                required
                 className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-700 text-gray-300bg-green-600  text-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
               />
+              
               <LoginButton/>
               {
                 errorMessage && (

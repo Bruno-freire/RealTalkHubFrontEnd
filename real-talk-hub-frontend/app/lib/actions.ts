@@ -13,10 +13,16 @@ export async function singInAuthentication(
   try {
     await signIn('credentials', formData)
   } catch (error) {
-    console.log(error)
     if (error instanceof AuthError) {
-      return `${error.cause?.err?.message}`
-    }
+        switch (error.type) {
+          case 'CredentialsSignin':
+            return 'Invalid credentials.';
+          case 'CallbackRouteError':
+            return 'Invalid credentials'
+          default:
+            return 'Something went wrong.';
+        }
+      }
     throw error;
   }
 }

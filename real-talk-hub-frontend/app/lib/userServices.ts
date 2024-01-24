@@ -1,5 +1,7 @@
+import { AxiosError } from "axios";
 import { IUserBase, ILoginUser } from "../interfaces/IUser";
 import api from "./api";
+import { promise } from "zod";
 
 interface ServerFunctions {
   login: (loginData: ILoginUser) => Promise<IUserBase>;
@@ -9,7 +11,14 @@ interface ServerFunctions {
 
 const server: ServerFunctions = {
   async login(loginData: ILoginUser): Promise<IUserBase> {
-    return await api.post("/auth/login", loginData)
+    try {
+      return await api.post("/auth/login", loginData)
+    } catch (error) {
+       if(error instanceof AxiosError){
+        return Promise.reject(error.response?.data.message)
+       }
+      return Promise.reject(error)
+    }
   },
 
   async showUsers(): Promise<IUserBase[]> {
