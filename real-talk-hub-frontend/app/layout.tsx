@@ -15,8 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <main className="flex w-full flex-col h-screen items-center pt-19 ">
-          <h1 className="text-white text-3xl my-3">WebSocket real-time forum</h1>
+          <div className='flex lg:w-1/3 md:w-1/2 flex-col'>
+            <h1 className="text-white text-3xl w-full my-3 flex justify-center items-center">WebSocket real-time forum</h1>
             {children}
+          </div>
         </main>
         </body>
     </html>

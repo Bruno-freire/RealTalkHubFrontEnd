@@ -1,18 +1,26 @@
 import { AxiosError } from "axios";
-import { IUserBase, ILoginUser } from "../interfaces/IUser";
+import { IUserBase, ILoginUser, IUserWithTopics,  } from "../interfaces/IUser";
 import api from "./api";
 import { promise } from "zod";
+import { auth } from "@/auth";
+import { revalidatePath, unstable_noStore } from "next/cache";
 
 interface ServerFunctions {
-  login: (loginData: ILoginUser) => Promise<IUserBase>;
+  login: (loginData: ILoginUser) => Promise<IUserBase | undefined>;
   showUsers: () => Promise<IUserBase[]>;
+  showUser: () => Promise<IUserBase>
+  showUserWithTopics: (email: string) => Promise<IUserWithTopics>
   // updateUser: (userData: IUpdateUser) => Promise<IUserBase>;
 }
 
-const server: ServerFunctions = {
+const userServices: ServerFunctions = {
   async login(loginData: ILoginUser): Promise<IUserBase> {
+    unstable_noStore()
     try {
-      return await api.post("/auth/login", loginData)
+      const response = await api.post("/auth/login", loginData)
+      const user = response.data
+      revalidatePath("/home")
+      return user
     } catch (error) {
        if(error instanceof AxiosError){
         return Promise.reject(error.response?.data.message)
@@ -22,8 +30,29 @@ const server: ServerFunctions = {
   },
 
   async showUsers(): Promise<IUserBase[]> {
-    return await api.get("/");
-  }
+    unstable_noStore()
+    return await api.get("/all");
+  },
+
+  async showUser() {
+    unstable_noStore()
+    try {
+      const session = await auth()
+      const email = session?.user?.email
+      const response = await api.post("/users/user", { email: email })
+      return response.data
+    } catch (error: any) {
+      console.log(error.message)
+      return Promise.reject(error)
+    }
+  },
+
+  async showUserWithTopics(email) {
+    unstable_noStore()
+    const response = await api.post("/users/user/topics", {email})
+    const user = response.data
+    return user
+  },
 };
 
-export default server;
+export default userServices;

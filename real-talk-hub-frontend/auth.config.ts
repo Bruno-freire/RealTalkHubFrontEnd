@@ -5,7 +5,7 @@ export const authConfig = {
     signIn: '/auth/login',
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
+    async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnHome = nextUrl.pathname.startsWith('/home');
       if (isOnHome) {
@@ -15,7 +15,7 @@ export const authConfig = {
         return Response.redirect(new URL('/home', nextUrl.origin));
       }
       return true;
-    },
+    }
   },
   providers: [],
 } satisfies NextAuthConfig;

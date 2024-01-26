@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 import { z } from 'zod'
-import server from './app/lib/userServices';
+import userServices from './app/lib/userServices';
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -15,9 +15,10 @@ export const { auth, signIn, signOut } = NextAuth({
         
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
-          const user = await server.login({email, password});
-    
+          const user = await userServices.login({email, password});
+          
           if(!user) return null;
+
           return user
         }
  

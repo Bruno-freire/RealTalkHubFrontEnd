@@ -77,7 +77,7 @@ export default function RegisterForm() {
         
               <button
                 type="submit"
-                className="w-full mt-4 bg-green-500 text-white rounded-md p-2 hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 "
+                className="w-full mt-4 bg-green-500 text-white rounded-md p-2 hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 "
               >
                 Register
               </button>
