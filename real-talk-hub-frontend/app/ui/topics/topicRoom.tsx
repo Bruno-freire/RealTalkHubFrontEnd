@@ -17,7 +17,7 @@ export default function TopicRoom({topic, userSession, uploadedMessages}:{topic:
     const [socket, setSocket] = useState<Socket | null>(null)
 
     useEffect(() => {
-        const newSocket = io("http://192.168.100.18:3333")
+        const newSocket = io("http://localhost:3333")
         setSocket(newSocket)
         
     }, [])
@@ -35,6 +35,7 @@ export default function TopicRoom({topic, userSession, uploadedMessages}:{topic:
         return () => {
             socket.emit("leave_room", {name: user.name, topicId: topic.id})
             socket.off("new_message")
+            socket.close()
         }
     }, [socket])
 
