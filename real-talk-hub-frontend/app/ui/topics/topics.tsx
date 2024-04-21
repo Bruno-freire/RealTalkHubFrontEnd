@@ -5,6 +5,7 @@ import { verifyTopicsAreAssociatedWithUser } from "@/app/lib/actions";
 import ButtonDeleteTopic from "./buttonDeleteTopic";
 import { auth } from "@/auth";
 import { IUserWithTopics } from "@/app/interfaces/IUser";
+import Link from 'next/link';
 
 export default async function TopicList() {
   const topics = await topicServices.getTopics();
@@ -26,7 +27,11 @@ export default async function TopicList() {
               {topic.title}
             </h2>
             <div className="flex gap-2">
-              <Button className="bg-green-500">ENTER THE ROOM</Button>
+              <Link href={`/home/topic/${topic.id}/room`}>
+                <Button className="bg-green-500">
+                  ENTER THE ROOM
+                </Button>
+              </Link>
               {userWithTopics?.topics && userWithTopics.topics.some((topicMap) => topicMap.id === topic.id) ? (
                 <ButtonDeleteTopic id={topic.id} />
               ) : (

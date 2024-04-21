@@ -7,7 +7,6 @@ export interface ITopicBase {
     messages: string;
 }
 
-export interface ITopicCreate {
-    user: IUserBase
-    title: string
-}
+export type ITopicCreate = Pick<ITopicBase, 'title' | 'user'>
+
+export type ITopicRoom = Omit<ITopicBase, 'id'>
