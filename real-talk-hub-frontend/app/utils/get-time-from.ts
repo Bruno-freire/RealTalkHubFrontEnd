@@ -1,4 +1,5 @@
 export default function getTimeFrom(dateTimeStr: string) {
+    console.log(dateTimeStr)
     const date = new Date(dateTimeStr)
     const hours = date.getHours().toString().padStart(2, "0")
     const minutes = date.getMinutes().toString().padStart(2, "0")

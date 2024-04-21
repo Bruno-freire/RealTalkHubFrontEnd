@@ -6,5 +6,5 @@ export interface IMessageBase {
     content: string 
     author: IUserBase
     topic: ITopicBase
-    create_at: string
+    created_at: string
 }

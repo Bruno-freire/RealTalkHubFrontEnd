@@ -22,9 +22,11 @@ export default function FormSend({user, topicId, socket}: {user: IUserSession, t
    }
 
     return (
-        <form onSubmit={handleSubmitMessage} >
-            <input type="text" name="message" id="message" placeholder="Digite sua mensagem..." required/>
-            <button>Enviar</button>
+        <form className="flex gap-x-2" onSubmit={handleSubmitMessage} >
+            <input type="text" name="message" id="message" placeholder="Digite sua mensagem..." className="flex w-full bg-gray-900 rounded-md text-white text-lg p-1" required/>
+            <button className="flex justify-center text-black font-mono font-medium bg-green-500 hover:bg-green-300 transition-colors rounded-md p-2 w-1/3 aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
+                ENVIAR
+            </button>
         </form>
     )
 }
